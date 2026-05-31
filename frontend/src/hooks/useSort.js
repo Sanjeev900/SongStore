@@ -12,15 +12,13 @@ export function useSort(data) {
   const [sortDirection, setSortDirection] = useState('asc');
 
   const toggle = useCallback((column) => {
-    setSortColumn((prevCol) => {
-      if (prevCol === column) {
-        setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-        return column;
-      }
+    if (sortColumn === column) {
+      setSortDirection((prev) => (prev === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setSortColumn(column);
       setSortDirection('asc');
-      return column;
-    });
-  }, []);
+    }
+  }, [sortColumn]);
 
   const sortedData = useMemo(() => {
     if (!sortColumn || !data) return data;
